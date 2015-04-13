@@ -1,0 +1,201 @@
+<!--------------------------------------------------------------------------------
+ | Copyright 2015 Marek Suscak
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |     http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License. 
+ +------------------------------------------------------------------------------->
+<link rel="import" href="editors/text_cell_editor.html">
+
+<polymer-element name="crius-spreadsheet">
+    <template>
+        <link rel="stylesheet" href="spreadsheet.css">
+        <div id="scrollbar-measure" class="scroll-container scrollbar-measure"></div>
+
+        <div id="grid-outer-container" class="grid-outer-container-bordered" on-edit-complete="{{editCompleteAction}}" on-mousewheel="{{mouseWheelAction}}" on-dommousescroll="{{mouseWheelAction}}" hidden>
+            <div id="row-headers-background"></div>
+            <div id="column-headers-background"></div>
+            <div id="selected-row-headers-background" style="height:24px; left:0; top:76px;" hidden></div>
+            <div id="selected-column-headers-background" style="width:100px; left:150px; top:0px;" hidden></div>
+
+            <div id="grid-inner-container" on-selectStart="{{preventTextSelectionAction}}">
+                <div id="fixed-outer-container">
+                    <div id="fixed-inner-container">
+                        <div id="quadrant-fixed-left" class="quadrant">
+                            <table id="table-fixed-left" cellspacing="0" cellpadding="0">
+                                <colgroup id="colgroup-fixed-left">
+                                    <col style="width:46px;">
+                                    <col style="width:0px;">
+                                </colgroup>
+
+                                <thead id="thead-fixed-left">
+                                    <tr id="headers-row-fixed-left" class="row" style="height: 24px;">
+                                        <th id="column-row-header" class="header-cell"></th>
+                                        <th id="frozen-column-header" class="freezebar-cell header-cell freezebar-vertical-cell"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbody-fixed-left">
+                                    <tr id="freezebar-row-fixed-left" class="row">
+                                        <th id="frozen-row-header" class="freezebar-cell header-cell freezebar-horizontal-cell"></th>
+                                        <td class="freezebar-cell freezebar-vertical-cell"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div id="overlay-fixed-left" class="uberlay">
+
+                                <div class="overlay-container" style="z-index:8;">
+                                </div>
+
+                                <div class="overlay-container" style="z-index:7;">
+                                    <div class="active-cell-border-container range-border-container" hidden>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                    </div>
+                                </div>
+
+                                <div class="overlay-container" style="z-index:6;">
+                                </div>
+
+                                <div class="overlay-container" style="z-index:5;">
+                                </div>
+                            </div>
+                        </div><!--
+                        This comment is intentional to correctly display inline blocks
+                        --><div id="quadrant-fixed-right" class="quadrant">
+                            <table id="table-fixed-right" cellspacing="0" cellpadding="0">
+                                <colgroup id="colgroup-fixed-right">
+                                </colgroup>
+
+                                <thead id="thead-fixed-right">
+                                    <tr id="headers-row-fixed-right" class="row" style="height:24px;">
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbody-fixed-right">
+                                    <tr id="freezebar-row-fixed-right" class="row">
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="wide-background-container">&nbsp;</div>
+
+                            <div id="overlay-fixed-right" class="uberlay">
+                                <div class="overlay-container" style="z-index:7;">
+                                    <div class="active-cell-border-container range-border-container" hidden>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scrollable-outer-container">
+                    <div id="scrollable-inner-container">
+                        <div id="quadrant-scrollable-left" class="quadrant">
+                            <table id="table-scrollable-left" cellspacing="0" cellpadding="0">
+                                <colgroup id="colgroup-scrollable-left">
+                                    <col style="width:46px;">
+                                    <col style="width:0px;">
+                                </colgroup>
+
+                                <tbody id="tbody-scrollable-left">
+                                </tbody>
+                            </table>
+
+                            <div id="overlay-scrollable-left" class="uberlay">
+                                <div class="overlay-container" style="z-index:7;">
+                                    <div class="active-cell-border-container range-border-container" hidden>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--
+                        This comment is intentional to correctly display inline blocks
+                        --><div id="quadrant-scrollable-right" class="quadrant">
+                            <table id="table-scrollable-right" cellspacing="0" cellpadding="0">
+                                <colgroup id="colgroup-scrollable-right">
+                                </colgroup>
+
+                                <tbody id="tbody-scrollable-right">
+                                </tbody>
+                            </table>
+
+                            <div class="wide-background-container">&nbsp;</div>
+
+                            <div id="overlay-scrollable-right" class="uberlay">
+                                <div class="overlay-container" style="z-index:7;">
+                                    <div class="active-cell-border-container range-border-container" hidden>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                        <div class="range-border active-cell-border"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="static-overlay-container" class="overlay-container static-overlay-container">
+
+                <div id="freezebar-vertical" class="freezebar">
+                    <div id="freezebar-vertical-handle" class="freezebar-handle">
+                        <div id="freezebar-vertical-handle-bar" class="freezebar-handle-bar freezebar-vertical-handle-bar"></div>
+                    </div>
+
+                    <div id="freezebar-vertical-drop" class="freezebar-drop freezebar-vertical-drop">
+                        <div id="freezebar-vertical-drop-bar" class="freezebar-drop-bar freezebar-vertical-drop-bar">&nbsp;</div>
+                    </div>
+                </div>
+
+                <div id="freezebar-horizontal" class="freezebar">
+                    <div id="freezebar-horizontal-handle" class="freezebar-handle">
+                        <div id="freezebar-horizontal-handle-bar" class="freezebar-handle-bar freezebar-horizontal-handle-bar"></div>
+                    </div>
+
+                    <div id="freezebar-horizontal-drop" class="freezebar-drop freezebar-horizontal-drop">
+                        <div id="freezebar-horizontal-drop-bar" class="freezebar-drop-bar freezebar-horizontal-drop-bar">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="horizontal-scrollbar-shim">
+                <div id="horizontal-scrollbar-extension" class="column-freezebar-extension"></div>
+            </div>
+
+            <div id="vertical-scrollbar-shim">
+                <div id="vertical-scrollbar-extension" class="row-freezebar-extension"></div>
+            </div>
+
+            <div id="scroll-container" class="scroll-container" on-scroll="{{scrollTableAction}}">
+                <div id="scroll-container-content"></div>
+            </div>
+
+            <div id="editor-container-decorator" class="waffle-input-box-decorator waffle-input-box-locator" hidden></div>
+            <div id="editor-container" spellcheck="false" class="input-box" hidden></div>
+
+        </div>
+
+    </template>
+    <script type="application/dart" src="spreadsheet.dart"></script>
+</polymer-element>

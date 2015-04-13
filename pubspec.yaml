@@ -1,0 +1,13 @@
+name: spreadsheet
+version: 1.0.0
+author: Marek Suscak <marek.suscak@gmail.com>
+description: spreadsheet component
+homepage: http://github.com/urbantower/dart-spreadsheet
+environment:
+  sdk: 1.9.1
+dependencies:
+  polymer: 0.16.0+7
+transformers:
+- polymer:
+    entry_points:
+      - test/spreadsheet_example.html

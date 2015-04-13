@@ -1,2 +1,6 @@
-# dart-spreadsheet
-Spreadsheet component for Dart
+# Spreadsheet
+
+Spreadsheet is a Polymer based component for Dart.
+
+
+

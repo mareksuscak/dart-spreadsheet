@@ -1,0 +1,692 @@
+/*****************************************************************************
+ * Copyright 2015 Marek Suscak
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ *****************************************************************************/
+:host {
+    display: block;
+    position: relative;
+    color: #000;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Containers */
+#grid-outer-container {
+    background-color: #F3F3F3;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-outer-container-bordered {
+    border: 1px solid #c0c0c0;
+}
+
+#grid-inner-container {
+    width: auto;
+    height: auto;
+}
+
+#fixed-outer-container,
+#scrollable-outer-container {
+    position: relative;
+    white-space: nowrap;
+}
+
+#scrollable-outer-container {
+    overflow: hidden;
+    z-index: 3;
+}
+
+#fixed-outer-container {
+    overflow: visible;
+    z-index: 4;
+}
+
+.quadrant {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    vertical-align: top;
+}
+
+#fixed-inner-container > .quadrant {
+    z-index: 4;
+}
+
+#scrollable-inner-container > .quadrant {
+    z-index: 3;
+}
+
+/* Table and Cells */
+.quadrant > table {
+    border-collapse: separate;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-spacing: 0;
+    border-width: 0 0 0 0;
+    cursor: default;
+    margin: 0;
+    overflow: hidden;
+    table-layout: fixed;
+    white-space: nowrap;
+    width: 0;
+}
+
+.row {
+    min-height: 21px;
+}
+
+.data-cell,
+.header-cell {
+    border-color: #dadada;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+}
+
+.data-cell {
+    background-color: #FFFFFF;    
+    padding: 1px 3px;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.data-cell.clipped {
+    overflow: hidden;
+}
+
+.header-cell {
+    font-size: 11px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    border-color: #ccc;
+}
+
+thead > .header-cell {
+    height: 23px;
+}
+
+.freezebar-cell {
+    border-color: #dadfe8 !important;
+    background-color: #dadfe8;
+    padding: 0;
+    border-width: 0;
+}
+
+.freezebar-hidden {
+    height: 0px;
+    width: 0px;
+    display: none;
+}
+
+#column-row-header {
+    background-color: #F3F3F3;
+}
+
+/* Scrollbars */
+#horizontal-scrollbar-shim {
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 1px 0 0 0;
+    background: #f8f8f8;
+}
+
+#vertical-scrollbar-shim {
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 0 0 0 1px;
+    background: #f8f8f8;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.scroll-container {
+    position: absolute;
+    overflow: auto;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+    overflow: scroll;
+    top: 0;
+    left: 0;
+}
+
+/* Overlays */
+.overlay-container {
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: 0;
+    left: 0;
+}
+
+.static-overlay-container {
+    z-index: 6;
+}
+
+#row-headers-background,
+#column-headers-background {
+    background: #F3F3F3;
+    position: absolute;
+    z-index: 1;
+}
+
+#selected-row-headers-background,
+#selected-column-headers-background {
+    background-color: #DDDDDD;
+    position: absolute;
+    z-index: 2;
+}
+
+#selected-row-headers-background,
+#row-headers-background {
+    width: 46px;
+}
+
+#selected-column-headers-background,
+#column-headers-background {
+    height: 24px;
+}
+
+.wide-background-container {
+    background-color: #f3f3f3;
+    width: 50000px;
+    height: 0px;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.column-freezebar-extension {
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #dadfe8;
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #dbdbdb;
+    position: relative;
+}
+
+.column-freezebar-extension-collapsed {
+    background-color: #CCCCCC;
+    width: 1px;
+    border-left: none;
+    border-right: none;
+}
+
+.row-freezebar-extension {
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #dadfe8;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #dbdbdb;
+    position: relative;
+}
+
+.row-freezebar-extension-collapsed {
+    background-color: #CCCCCC;
+    height: 1px;
+    border-top: none;
+    border-bottom: none;
+}
+
+.freezebar .freezebar-drop, .freezebar .freezebar-handle-bar, .resizer, .resizer-hover .resizer-handle-bar, .rowcol-dragger .rowcol-dragger-handle, .rowcol-dragger .rowcol-dragger-handle-bar, .rowcol-dragger .rowcol-dragger-drop {
+    display: none;
+    outline: 0;
+}
+
+.freezebar-active .freezebar-drop, .freezebar-active .freezebar-handle-bar, .resizer-hover, .resizer-active, .resizer-active .resizer-handle-bar, .rowcol-dragger-hover, .rowcol-dragger-handle, .rowcol-dragger-active .rowcol-dragger-handle, .rowcol-dragger-active .rowcol-dragger-handle-bar, .rowcol-dragger-active .rowcol-dragger-drop {
+    display: block;
+}
+
+.freezebar-origin {
+  height: 23px;
+  width: 45px;
+  position: absolute;
+  top: 0px;
+  border: 1px #ccc solid;
+  background: no-repeat url("//ssl.gstatic.com/docs/spreadsheets/waffle_sprite39.png") -490px 0px;
+  left: 0px;
+  border-width: 0 1px 1px 0;
+}
+
+.freezebar-vertical-handle {
+    width: 4px;
+    background: url("//ssl.gstatic.com/docs/spreadsheets/ritz_freezebar_vertical.png") no-repeat;
+    top: 0;
+}
+
+.freezebar-vertical-handle-invisible {
+  width: 4px;
+}
+
+.freezebar-horizontal-handle-invisible {
+  height: 4px;
+}
+
+.freezebar-hover .freezebar-vertical-handle {
+    background: url("//ssl.gstatic.com/docs/spreadsheets/ritz_freezebar_vertical_hover.png") no-repeat;
+}
+
+.freezebar-active .freezebar-vertical-handle {
+    width: 5px;
+}
+
+.freezebar-horizontal-handle {
+    height: 4px;
+    background: url("//ssl.gstatic.com/docs/spreadsheets/ritz_freezebar_horizontal.png") no-repeat;
+    left: 0;
+}
+
+.freezebar-hover .freezebar-horizontal-handle {
+    background: url("//ssl.gstatic.com/docs/spreadsheets/ritz_freezebar_horizontal_hover.png") no-repeat;
+}
+
+.freezebar-active .freezebar-horizontal-handle {
+    height: 5px;
+}
+
+.freezebar-handle, .freezebar-drop {
+    position: absolute;
+    z-index: 6;
+}
+
+.freezebar-handle {
+    /*cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/openhand_8_8.cur), move;*/
+}
+
+.freezebar-active .freezebar-handle {
+    /*cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/closedhand_8_8.cur), move;*/
+}
+
+.freezebar-handle-bar, .freezebar-drop-bar {
+    position: relative;
+    z-index: 7;
+}
+
+.freezebar-vertical-handle-bar {
+    width: 2px;
+    background: #dbe5f7;
+    border-color: #a5c6fe;
+    border-style: solid;
+    border-width: 0 1px;
+    opacity: 0.45;
+    filter: alpha(opacity=45);
+    margin-top: 24px;
+}
+
+.freezebar-horizontal-handle-bar {
+    height: 2px;
+    background: #dbe5f7;
+    border-color: #a5c6fe;
+    border-style: solid;
+    border-width: 1px 0;
+    opacity: 0.45;
+    filter: alpha(opacity=45);
+    margin-left: 46px;
+}
+
+.freezebar-vertical-drop {
+    background: url("//ssl.gstatic.com/docs/spreadsheets/jfk_freezebar_active_vertical.png") no-repeat;
+    width: 4px;
+    top: 0px;
+}
+
+.freezebar-vertical-drop-bar {
+    width: 4px;
+    background-color: #afbbd1;
+    border-width: 2px 1px 2px 2px;
+    margin-top: 24px;
+}
+
+.freezebar-horizontal-drop {
+    background: url("//ssl.gstatic.com/docs/spreadsheets/jfk_freezebar_active_horizontal.png") no-repeat;
+    height: 4px;
+    left: 0px;
+}
+
+.freezebar-horizontal-drop-bar {
+    height: 4px;
+    overflow: hidden;
+    background-color: #afbbd1;
+    border-width: 2px 2px 1px 2px;
+    margin-left: 46px;
+}
+
+.resizer {
+    z-index: 7;
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+.resizer-handle {
+    position: relative;
+    border-style: none;
+}
+
+.resizer-vertical-handle {
+    width: 5px;
+    cursor: e-resize;
+    background: #4d90fe;
+    height:24px;
+}
+
+.resizer-vertical-handle-bar {
+    position: absolute;
+    width: 1px;
+    background-color: #4d90fe;
+    left: 2px;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    margin-top:24px;
+}
+
+.resizer-horizontal-handle {
+    height: 5px;
+    cursor: n-resize;
+    background: #4d90fe;
+    width: 46px;
+}
+
+.resizer-horizontal-handle-bar {
+    position: absolute;
+    height: 1px;
+    background-color: #4d90fe;
+    top: 2px;
+    overflow: hidden;
+    margin-left: 46px;
+}
+
+.rowcol-dragger {
+    position: absolute;
+    z-index: 6;
+}
+
+.rowcol-dragger-handle, .rowcol-dragger-drop {
+    position: absolute;
+    z-index: 6;
+}
+
+.rowcol-dragger-hover .rowcol-dragger-handle {
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/openhand_8_8.cur), move;
+}
+
+.rowcol-dragger-active .rowcol-dragger-handle {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/closedhand_8_8.cur), move;
+}
+
+.rowcol-dragger-drop-bar, .rowcol-dragger-handle-bar {
+    z-index: 6;
+    position: absolute;
+    background-color: #777;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.rowcol-dragger-handle-bar {
+    border: 2px solid #36c;
+    opacity: 0.20;
+    filter: alpha(opacity=20);
+}
+
+.rowcol-dragger-horizontal-drop,
+.rowcol-dragger-horizontal-handle {
+    width: 46px;
+    top: 0px;
+}
+
+.rowcol-dragger-vertical-drop,
+.rowcol-dragger-vertical-handle {
+    height: 24px;
+}
+
+.rowcol-dragger-horizontal-drop-bar,
+.rowcol-dragger-horizontal-handle-bar {
+    margin-left: 46px;
+}
+
+.rowcol-dragger-vertical-drop-bar,
+.rowcol-dragger-vertical-handle-bar {
+    margin-top: 24px;
+}
+
+.rowcol-dragger-horizontal-drop-bar {
+    height: 2px;
+}
+
+.rowcol-dragger-vertical-drop-bar {
+    width: 2px;
+}
+
+.selection-border-cover {
+    position: absolute;
+    z-index: 7;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/openhand_8_8.cur), move;
+    height:5px;
+}
+
+.selection-border-cover-active {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+    cursor: url(https://ssl.gstatic.com/docs/spreadsheets/cursors/closedhand_8_8.cur), move;
+    height:6px;
+}
+
+.uberlay {
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: 0;
+}
+
+.selection {
+    position: absolute;
+    opacity: 0.20;
+    z-index: 5;
+    background-color: rgb(160, 195, 255);
+}
+
+.collab-presence-badge {
+    position: absolute;
+    z-index: 6;
+}
+
+.range-border-container,
+.autofill-handle-container {
+    position: absolute;
+    border-width: 0px;
+    padding: 0px;
+    width: 0px;
+    height: 0px;
+}
+
+.range-border {
+    position: absolute;
+    border-width: 0;
+    border-style: solid;
+    padding: 0;
+    pointer-events: none;
+    _overflow: hidden;
+}
+
+.active-cell-border {
+    border-color: #4285f4;
+    line-height: 1px;
+    z-index: 7;
+}
+
+.duplication-active-cell-border {
+    border-color: #c0392b;
+    line-height: 1px;
+    z-index: 7;
+}
+
+.selection-border {
+    border-color: #4285f4;
+    line-height: 0;
+    z-index: 7;
+}
+
+.selection-border-dragging {
+    border-style: dashed;
+    border-color: #4285f4;
+    line-height: 0;
+    z-index: 7;
+}
+
+.autofill-border {
+    border-color: gray;
+    border-style: dashed;
+    line-height: 0;
+}
+
+.cell-border {
+    line-height: 1px;
+}
+
+.copy-border {
+    border-color: #4285f4;
+    border-style: dashed;
+    line-height: 0;
+}
+
+.autofill-handle {
+    position: absolute;
+    background-color: #4285f4;
+    border: 1px solid white;
+    width: 5px;
+    height: 5px;
+    _overflow: hidden;
+    z-index: 8;
+    margin-top: 1px;
+    border-width: 1px 0 0 1px;
+}
+
+.autofill-cover {
+    position: absolute;
+    cursor: crosshair;
+    width: 7px;
+    height: 7px;
+    z-index: 9;
+}
+
+.collab-presence-badge {
+    z-index: 7;
+    position: absolute;
+    padding: 0px 1px 0px 2px;
+    background-color: #65ad89;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    -moz-box-sizing: border-box;
+}
+
+.input-box {
+    position: absolute;
+    background-color: #fff;
+    text-align: left;
+    top: -10000px;
+    left: -10000px;
+    max-height: 9900px;
+    max-width: 9900px;
+    border: 2px #5292f7 solid;
+    padding: 0;
+    margin: 0;
+    z-index: 15;
+    resize: none;
+    overflow: hidden;
+    white-space: normal;
+    outline: none;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    word-wrap: break-word;
+}
+
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    z-index: 16;
+}
+
+.waffle-input-box-locator {
+    background-color: #68e;
+}
+
+.waffle-input-box-decorator {
+    white-space: nowrap;
+    z-index: 15;
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 2px;
+    color: #fff;
+    border-style: none;
+    border-width: 0px;
+    overflow: visible;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.data-cell.readonly {
+    color: #8E908D;
+}
+
+.data-cell.demand-changed{
+  /*background-color: #FF0000 !important;*/
+  background-color: rgba(255, 0, 0, 1) !important;
+}
+
+/* Utils */
+[hidden] {
+    display: none;
+}
