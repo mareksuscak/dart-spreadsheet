@@ -20,7 +20,7 @@ part of spreadsheet.editors;
  * Custom cell editor for textual types.
  * Default name is #text
  */
-@CustomTag('crius-text-cell-editor')
+@CustomTag('text-cell-editor')
 class TextCellEditor extends PolymerElement with CellEditor {
 
   static final Logger _logger = new Logger('CellEditor');
@@ -28,7 +28,7 @@ class TextCellEditor extends PolymerElement with CellEditor {
   DivElement get cellInput => $['cell-input'] as DivElement;
   Range range;
 
-  factory TextCellEditor() => new Element.tag("crius-text-cell-editor");
+  factory TextCellEditor() => new Element.tag("text-cell-editor");
   TextCellEditor.created() : super.created();
 
   @override

@@ -31,7 +31,7 @@ typedef void ConfigureCellFunction(int rowId, int colId, Cell cell);
 typedef void ConfigureRowFunction(int rowId, Row row);
 typedef void PerformBulkUpdateFunction();
 
-@CustomTag('crius-spreadsheet')
+@CustomTag('x-spreadsheet')
 class Spreadsheet extends PolymerElement {
 
   static final Logger _logger = new Logger('Spreadsheet');
@@ -175,7 +175,7 @@ class Spreadsheet extends PolymerElement {
   StreamSubscription clickSubscription;
   StreamSubscription doubleClickSubscription;
 
-  factory Spreadsheet() => new Element.tag('crius-spreadsheet');
+  factory Spreadsheet() => new Element.tag('x-spreadsheet');
   Spreadsheet.created() : super.created() {
     // register default editors and renderers
     registerEditor(#text, new TextCellEditor());
