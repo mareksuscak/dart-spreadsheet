@@ -565,8 +565,6 @@ class Spreadsheet extends PolymerElement {
 
   /// Handles key press event that activated cell editor when character key is pressed.
   void keyPressedAction(KeyboardEvent event) {
-    print("KEY PRESSED");
-
     if( event.keyCode == 10 ||
         event.ctrlKey ||
         event.altKey ||

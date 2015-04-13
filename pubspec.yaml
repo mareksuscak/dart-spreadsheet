@@ -4,9 +4,10 @@ author: Marek Suscak <marek.suscak@gmail.com>
 description: spreadsheet component
 homepage: http://github.com/urbantower/dart-spreadsheet
 environment:
-  sdk: 1.9.1
+  sdk: ^1.8.0
 dependencies:
-  polymer: 0.16.0+7
+  browser: any
+  polymer: ^0.16.0
 transformers:
 - polymer:
     entry_points:
