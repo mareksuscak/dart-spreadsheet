@@ -3,11 +3,8 @@ version: 1.0.0
 author: Marek Suscak <marek.suscak@gmail.com>
 description: spreadsheet component
 homepage: http://github.com/urbantower/dart-spreadsheet
-environment:
-  sdk: ^1.8.0
 dependencies:
-  browser: any
-  polymer: ^0.16.0
+  polymer: ">=0.16.0 <0.17.0"
 transformers:
 - polymer:
     entry_points:
